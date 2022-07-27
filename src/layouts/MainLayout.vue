@@ -4,10 +4,14 @@
       <q-toolbar>
         <q-toolbar-title> Auto App </q-toolbar-title>
         <router-link to="/"> Inicio </router-link>
-        <router-link to="/autos" v-if="authStore.token" class="px-2"
+        <router-link to="/autos" v-if="authStore.token !== null" class="px-2"
           >Autos</router-link
         >
-        <div v-if="authStore.token" class="px-2 cursor-pointer" @click="logout">
+        <div
+          v-if="authStore.token !== null"
+          class="px-2 cursor-pointer"
+          @click="logout"
+        >
           Logout
         </div>
       </q-toolbar>
@@ -26,6 +30,7 @@ import { useRouter } from "vue-router";
 
 const authStore = useUserStore();
 const router = useRouter();
+console.log(authStore.token);
 
 const logout = () => {
   authStore.logout();

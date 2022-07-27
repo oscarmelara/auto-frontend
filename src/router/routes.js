@@ -6,9 +6,6 @@ const routes = [
       {
         path: "",
         component: () => import("pages/IndexPage.vue"),
-        meta: {
-          auth: true,
-        },
       },
       {
         path: "login",

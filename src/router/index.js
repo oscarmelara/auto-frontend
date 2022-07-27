@@ -31,18 +31,44 @@ export default route(function (/* { store, ssrContext } */) {
       return next();
     }
 
-    if (requiredAuth || sessionStorage.getItem("user")) {
+    // if (requiredAuth || sessionStorage.getItem("user")) {
+    //   sessionStorage.getItem("user")
+    //     ? await authStore.refreshToken()
+    //     : authStore.refreshToken();
+
+    //   if (authStore.token) {
+    //     return next();
+    //   } else {
+    //     return next("/login");
+    //   }
+    // }
+    // return next();
+
+    // si no existe el token (se refrescó el sitio web) v1
+    if (sessionStorage.getItem("user")) {
       sessionStorage.getItem("user")
         ? await authStore.refreshToken()
         : authStore.refreshToken();
 
-      if (authStore.token) {
-        return next();
+      if (requiredAuth) {
+        // validar al usuario o token
+        if (authStore.token) {
+          return next();
+        }
+        return next("/login");
       } else {
+        return next();
+      }
+    } else {
+      if (requiredAuth) {
+        await authStore.refreshToken();
+        if (authStore.token) {
+          return next();
+        }
         return next("/login");
       }
+      return next();
     }
-    return next();
   });
 
   return Router;

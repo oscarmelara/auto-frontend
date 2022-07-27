@@ -34,7 +34,6 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await api.get("/refresh");
       token.value = res.data.token;
-      sessionStorage.setItem("user", true);
     } catch (error) {
       console.log(error);
       sessionStorage.removeItem("user");
