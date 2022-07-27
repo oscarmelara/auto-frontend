@@ -100,7 +100,6 @@ export const useCarsStore = defineStore("link", () => {
       getCars();
       console.log(res.data);
     } catch (error) {
-      //   console.log(error.response?.data || error);
       throw error.response?.data || error;
     } finally {
       Loading.hide();
